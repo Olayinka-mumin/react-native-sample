@@ -1,11 +1,18 @@
 {
   "expo": {
-    "name": "test",
-    "slug": "test",
+    "name": "Sample",
+    "slug": "sample",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "icon": "./assets/media/icon.png",
+    "splash": {
+      "image": "./assets/media/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "userInterfaceStyle": "automatic"
   },
-  "name": "expo-bare-typescript"
+  "name": "Sample"
 }

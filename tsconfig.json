@@ -1,5 +1,15 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": "src",
+    "paths": {
+      "@common/*": ["partials/common/*"],
+      "@form/*": ["partials/form/*"],
+      "@config/*": ["config/*"],
+      "@svg/*": ["partials/svg/*"],
+      "@modules/*": ["modules/*"]
+    }
+  },
   "extends": "expo/tsconfig.base",
   "baseUrl": "./",
   "paths": {
