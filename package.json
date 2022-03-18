@@ -67,6 +67,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@commitlint/config-conventional": "^16.2.1",
+    "@release-it/conventional-changelog": "^4.2.2",
     "@testing-library/react-native": "^9.0.0",
     "@types/jest": "^27.4.1",
     "@types/react": "~17.0.21",
