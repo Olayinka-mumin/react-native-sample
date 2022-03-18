@@ -162,7 +162,6 @@ const MenuTxt = styled.Text`
   font-family: Regular;
 `;
 const List = styled.FlatList``;
-const Icon = styled.Text``;
 const CenterTitle = styled.Text`
   color: ${(props: any) => (props.color ? props.color : Helper.getColor().primaryTxt)};
   font-family: Medium;

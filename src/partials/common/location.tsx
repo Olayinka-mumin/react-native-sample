@@ -155,7 +155,7 @@ export default (props: Props) => {
           latitude: geometry.lat,
           longitude: geometry.lng,
         };
-        mapRef.current && mapRef.current.animateToRegion(region, 1000);
+        mapRef.current?.animateToRegion(region, 1000);
         onRegionChange(region);
       })
       .catch((_e) => {

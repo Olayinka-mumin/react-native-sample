@@ -102,7 +102,7 @@ class Helper {
               resolve(granted);
             },
           },
-        ],
+        ]
       );
     });
     return granted;
