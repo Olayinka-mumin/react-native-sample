@@ -15,10 +15,10 @@ module.exports = function (api) {
           root: ['./'],
           extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.jsx', '.json'],
           alias: {
-            '@common': './src/partials/common',
-            '@form': './src/partials/form/',
+            '@common': './src/shared/common',
+            '@form': './src/shared/form/',
             '@config': './src/config/',
-            '@svg': './src/partials/svg',
+            '@svg': './src/shared/svg',
             '@modules': './src/modules/',
           },
         },

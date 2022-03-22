@@ -3,10 +3,10 @@
     "strict": true,
     "baseUrl": "src",
     "paths": {
-      "@common/*": ["partials/common/*"],
-      "@form/*": ["partials/form/*"],
+      "@common/*": ["shared/common/*"],
+      "@form/*": ["shared/form/*"],
       "@config/*": ["config/*"],
-      "@svg/*": ["partials/svg/*"],
+      "@svg/*": ["shared/svg/*"],
       "@modules/*": ["modules/*"]
     }
   },
