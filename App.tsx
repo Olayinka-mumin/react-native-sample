@@ -15,14 +15,13 @@ import { fetchStripeKey, fetchCountry } from '@modules/auth/store/action';
 import Socket from '@config/socket';
 
 interface IData {
-  user?: IUser | null;
+  user?: IUser;
   loading?: boolean;
 }
 Helper.setLocale();
 export default () => {
   const dispatch = useAppDispatch();
   const [data, setData] = useState<IData>({
-    user: null,
     loading: true,
   });
 
@@ -78,7 +77,7 @@ export default () => {
   return (
     <ErrorBoundary onError={errorHandler}>
       <InternetConnectionAlert onChange={networkHandler}>
-        {!data.loading && <Route user={data.user} />}
+        {!data.loading && <Route user={data.user && data.user} />}
       </InternetConnectionAlert>
       <Toast />
       <Socket />
