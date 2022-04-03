@@ -7,17 +7,21 @@ import ErrorBoundary from 'react-native-error-boundary';
 import { initStripe } from '@stripe/stripe-react-native';
 import InternetConnectionAlert from 'react-native-internet-connection-alert';
 import { USER_KEY } from '@config/constant';
-import { storeUser, setNetwork } from '@modules/auth/store/reducer';
+import { storeUser, setNetwork, IUser } from '@modules/auth/store/reducer';
 import { useAppDispatch } from '@config/store';
 import Helper from '@config/helper';
 import Route from '@config/route';
 import { fetchStripeKey, fetchCountry } from '@modules/auth/store/action';
 import Socket from '@config/socket';
 
+interface IData {
+  user?: IUser | null;
+  loading?: boolean;
+}
 Helper.setLocale();
 export default () => {
   const dispatch = useAppDispatch();
-  const [data, setData]: any = useState({
+  const [data, setData] = useState<IData>({
     user: null,
     loading: true,
   });
@@ -35,7 +39,7 @@ export default () => {
   const checkUser = async () => {
     dispatch(fetchCountry());
     const user = await Helper.getItem(USER_KEY);
-    dispatch(storeUser({ user }));
+    await dispatch(storeUser({ user }));
     setupStripe().then();
     done({ user });
   };
@@ -45,7 +49,7 @@ export default () => {
     typeof publishableKey == 'string' && (await initStripe({ publishableKey }));
   };
 
-  const done = (value: any) => {
+  const done = (value: IData) => {
     loadAsset().then(async () => {
       setData({ ...value, loading: false });
       await SplashScreen.hideAsync();

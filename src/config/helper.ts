@@ -1,13 +1,16 @@
 import i18n from 'i18n-js';
-import { Alert, Appearance } from 'react-native';
-import * as Location from 'expo-location';
-import Toast from 'react-native-toast-message';
-import * as Localization from 'expo-localization';
-import * as ImagePicker from 'expo-image-picker';
-import * as DocumentPicker from 'expo-document-picker';
 import Moment from 'moment';
+import * as Location from 'expo-location';
 import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
+import { Alert, Appearance } from 'react-native';
+import * as Localization from 'expo-localization';
+import * as DocumentPicker from 'expo-document-picker';
+import { DocumentPickerOptions } from 'expo-document-picker';
+import { ImageInfo, ImagePickerOptions } from 'expo-image-picker';
+import Toast, { ToastShowParams } from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import { colors } from './constant';
 import resource from './language';
 
@@ -19,18 +22,13 @@ class Helper {
     this.lang = 'en';
   }
 
-  toast = (data: any) => {
+  toast = (data: ToastShowParams) => {
     Toast.show({
+      ...data,
       type: data.type ? data.type : 'info', // 'success | error | info'
       position: data.position ? data.position : data.type === 'error' ? 'bottom' : 'top', // 'top | bottom'
-      text1: data.title ? data.title : '',
-      text2: data.message ? data.message : '',
       visibilityTime: data.visibilityTime ? data.visibilityTime : 4000,
-      autoHide: data.hide ? data.hide : true,
-      // topOffset: 30, bottomOffset: 40,
-      onShow: () => {},
-      onHide: () => {},
-      onPress: () => {},
+      autoHide: data.autoHide ? data.autoHide : true,
     });
   };
 
@@ -38,31 +36,26 @@ class Helper {
     try {
       const val = await AsyncStorage.getItem(key);
       return JSON.parse(val as string);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (_error) {}
   };
 
   setItem = async (key: string, value: any) => {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (_error) {}
   };
 
   removeItem = async (key: string) => {
     try {
       await AsyncStorage.removeItem(key);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (_error) {}
   };
 
   getColor = () => {
     const dark = Appearance.getColorScheme() === 'dark';
     return {
       primary: dark ? colors.primaryDark : colors.primary,
+      secondary: dark ? colors.secondaryDark : colors.secondary,
       primaryView: dark ? colors.primaryDark : colors.primary,
       plane: dark ? colors.planeDark : colors.plane,
       primaryTxt: dark ? colors.primaryTextDark : colors.primaryText,
@@ -84,7 +77,7 @@ class Helper {
     let granted = true;
     await new Promise(async (resolve) => {
       await Alert.alert(
-        i18n.t('let_errand_access', { access }),
+        i18n.t('let_app_access', { access }),
         i18n.t('permission_msg', { access }),
         [
           {
@@ -108,7 +101,7 @@ class Helper {
     return granted;
   };
 
-  mediaPicker = async (type: string, options?: any) => {
+  mediaPicker = async (type: string, options?: ImagePickerOptions) => {
     // Type options: 'camera', 'library', 'document'
     switch (type) {
       case 'camera': {
@@ -134,7 +127,7 @@ class Helper {
         }
       }
       case 'document':
-        return await DocumentPicker.getDocumentAsync(options);
+        return await DocumentPicker.getDocumentAsync(options as DocumentPickerOptions);
     }
   };
 
@@ -147,7 +140,7 @@ class Helper {
         if (!preRequest) return permitError(i18n.t('location_permission_error'));
         return Location.requestForegroundPermissionsAsync().then(async (res2) => {
           if (res2.status === 'granted') return await this.getLocation();
-          else return { error: i18n.t('location_permission_error') };
+          return permitError(i18n.t('location_permission_error'));
         });
       }
     });
@@ -158,18 +151,38 @@ class Helper {
       const currentLocation = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
       });
-      if (currentLocation.coords.latitude) {
-        return { ...currentLocation.coords };
-      } else return null;
+      if (currentLocation.coords.latitude) return { ...currentLocation.coords };
+      return null;
     } catch (e) {
       return null;
     }
   };
 
-  launchMedia = async (type: string, options?: any) => {
-    return type === 'camera'
-      ? await ImagePicker.launchCameraAsync({ quality: 0, ...options })
-      : await ImagePicker.launchImageLibraryAsync({ quality: 0, ...options });
+  launchMedia = async (type: string, options?: ImagePickerOptions) => {
+    const img =
+      type === 'camera'
+        ? await ImagePicker.launchCameraAsync({ quality: 0, ...options })
+        : await ImagePicker.launchImageLibraryAsync({ quality: 0, ...options });
+    if (img.cancelled || img.type !== 'image') return img;
+    return this.compressImg(img);
+  };
+
+  compressImg = async (img: ImageInfo) => {
+    const info = await FileSystem.getInfoAsync(img.uri);
+    const size = info.size && info.size / 1e6;
+    const result = await manipulateAsync(
+      img.uri,
+      [
+        {
+          resize: {
+            width: img.width / getCompressionSize(size),
+            height: img.height / getCompressionSize(size),
+          },
+        },
+      ],
+      { compress: 0.0, format: SaveFormat.JPEG }
+    );
+    return { ...img, ...result };
   };
 
   formatFile = (file: any) => {
@@ -221,6 +234,13 @@ const permitError = (message?: string, status?: string) => {
     status: status ? status : 'denied',
     message: message ? message : i18n.t('permission_error'),
   };
+};
+
+let getCompressionSize = (size?: number) => {
+  if (size && size < 1) return 1;
+  else if (size && size < 2) return 2;
+  else if (size && size > 3) return 2;
+  else return 1;
 };
 
 export default new Helper();

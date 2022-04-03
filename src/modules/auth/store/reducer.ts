@@ -45,11 +45,11 @@ interface authInitialState {
   loading: boolean;
   country: any;
   userLocation: any;
-  user: userInterface | null;
+  user: IUser | null;
   network: any;
 }
 
-export interface userInterface {
+export interface IUser {
   token: string;
   id: string;
   first_name: string;

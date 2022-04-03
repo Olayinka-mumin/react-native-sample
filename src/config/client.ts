@@ -17,10 +17,9 @@ if (__DEV__) {
 }
 
 export default () => {
-  const token = Helper.token;
-  if (!token) return axios.create({ baseURL });
+  if (!Helper.token) return axios.create({ baseURL });
   return axios.create({
     baseURL,
-    headers: { Authorization: 'Bearer ' + token },
+    headers: { Authorization: 'Bearer ' + Helper.token },
   });
 };
