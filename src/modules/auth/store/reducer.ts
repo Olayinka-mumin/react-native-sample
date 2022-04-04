@@ -10,7 +10,7 @@ export const auth = createSlice({
     country: null,
     userLocation: null,
     network: null,
-  } as authInitialState,
+  } as IAuthState,
   extraReducers: {
     [queryOne.pending.type]: (state: any) => {
       state.loading = true;
@@ -41,7 +41,7 @@ export const auth = createSlice({
 export const { storeUser, setNetwork } = auth.actions;
 export default auth.reducer;
 
-interface authInitialState {
+interface IAuthState {
   loading: boolean;
   country: any;
   userLocation: any;
