@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import ErrorBoundary from 'react-native-error-boundary';
 import { initStripe } from '@stripe/stripe-react-native';
 import InternetConnectionAlert from 'react-native-internet-connection-alert';
-import { USER_KEY } from '@config/constant';
+import { USER_KEY } from '@config/constants';
 import { storeUser, setNetwork, IUser } from '@modules/auth/store/reducer';
 import { useAppDispatch } from '@config/store';
 import Helper from '@config/helper';
@@ -25,15 +25,15 @@ export default () => {
     loading: true,
   });
 
+  const handler = async () => {
+    await SplashScreen.preventAutoHideAsync();
+    await checkUser();
+  };
+
   useEffect(() => {
     handler().then();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  let handler = async () => {
-    await SplashScreen.preventAutoHideAsync();
-    await checkUser();
-  };
 
   const checkUser = async () => {
     dispatch(fetchCountry());
@@ -43,7 +43,7 @@ export default () => {
     done({ user });
   };
 
-  let setupStripe = async () => {
+  const setupStripe = async () => {
     const publishableKey = await fetchStripeKey();
     typeof publishableKey == 'string' && (await initStripe({ publishableKey }));
   };
@@ -77,7 +77,7 @@ export default () => {
   return (
     <ErrorBoundary onError={errorHandler}>
       <InternetConnectionAlert onChange={networkHandler}>
-        {!data.loading && <Route user={data.user && data.user} />}
+        {!data.loading && <Route user={data.user} />}
       </InternetConnectionAlert>
       <Toast />
       <Socket />

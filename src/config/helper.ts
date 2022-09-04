@@ -11,7 +11,7 @@ import { ImageInfo, ImagePickerOptions } from 'expo-image-picker';
 import Toast, { ToastShowParams } from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
-import { colors } from './constant';
+import { colors } from './constants';
 import resource from './language';
 
 class Helper {

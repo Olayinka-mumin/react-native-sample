@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import Echo from 'laravel-echo/dist/echo';
 import React, { useEffect, useState } from 'react';
 import Helper from '@config/helper';
-import { NOTIFICATION_APP_ID } from '@config/constant';
+import { NOTIFICATION_APP_ID } from '@config/constants';
 import { socketBaseURL } from '@config/client';
 import { RootState, useAppDispatch } from '@config/store';
 import { queryOne } from '@modules/auth/store/action';

@@ -6,7 +6,7 @@
 
 import axios from 'axios';
 import Helper from '@config/helper';
-import { BASE_URL, DEV_BASE_URL, SOCKET_BASE_URL, DEV_SOCKET_BASE_URL } from '@config/constant';
+import { BASE_URL, DEV_BASE_URL, SOCKET_BASE_URL, DEV_SOCKET_BASE_URL } from '@config/constants';
 
 export let baseURL = BASE_URL;
 export let socketBaseURL = SOCKET_BASE_URL;

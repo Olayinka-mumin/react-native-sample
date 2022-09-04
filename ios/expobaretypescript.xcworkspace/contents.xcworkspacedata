@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:expobaretypescript.xcodeproj">
+      location = "group:/Users/abdulmumin/code/apps/react-native/react-native-sample/ios/expobaretypescript.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
