@@ -2,24 +2,24 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { enableScreens } from 'react-native-screens';
-import { IUser } from '@modules/auth/store/reducer';
-import Welcome from '@modules/auth/screen/welcome';
+import { useSelector } from 'react-redux';
+import { RootState } from '@config/store';
+import Welcome from '@modules/auth/screens/Welcome';
+
 const Stack = createNativeStackNavigator();
 enableScreens();
 
-interface Props {
-  user?: IUser;
-}
-const Route = (props: Props) => {
+const Route = () => {
+  const user = useSelector((state: RootState) => state.auth.user);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={props.user ? 'Sink' : 'Chat'}>
+      <Stack.Navigator initialRouteName={user ? 'Sink' : 'Chat'}>
         <Stack.Screen
-          name={'Sink'}
+          name="Sink"
           component={Welcome}
-          options={{ title: 'SendErrand Kitchen Sink' }}
+          options={{ title: 'Kitchen Sink' }}
         />
-        <Stack.Screen name={'Chat'} component={Welcome} options={{ headerShown: false }} />
+        <Stack.Screen name="Welcome" component={Welcome} options={{ title: 'Welcome' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,11 +3,10 @@
     "strict": true,
     "baseUrl": "src",
     "paths": {
-      "@common/*": ["shared/common/*"],
-      "@form/*": ["shared/form/*"],
+      "@shared/*": ["shared/*"],
       "@config/*": ["config/*"],
-      "@svg/*": ["shared/svg/*"],
-      "@modules/*": ["modules/*"]
+      "@modules/*": ["modules/*"],
+      "@assets/*": ["assets/*"],
     }
   },
   "extends": "expo/tsconfig.base",

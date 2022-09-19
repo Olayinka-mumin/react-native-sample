@@ -7,7 +7,7 @@ describe('Example', () => {
     await device.reloadReactNative();
   });
 
-  it('should have welcome screen', async () => {
+  it('should have welcome screens', async () => {
     await expect(element(by.label('Text'))).toBeVisible();
     await expect(element(by.id('textField'))).toBeVisible();
     await element(by.id('textField')).typeText('passcode');
