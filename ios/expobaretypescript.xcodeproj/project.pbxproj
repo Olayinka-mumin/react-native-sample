@@ -567,6 +567,7 @@
 				DEVELOPMENT_TEAM = MW86T36798;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = expobaretypescript/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = STECS;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -577,7 +578,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sample.expobaretypescript;
+				PRODUCT_BUNDLE_IDENTIFIER = ng.stecs;
 				PRODUCT_NAME = expobaretypescript;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -596,6 +597,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MW86T36798;
 				INFOPLIST_FILE = expobaretypescript/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = STECS;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -606,7 +608,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sample.expobaretypescript;
+				PRODUCT_BUNDLE_IDENTIFIER = ng.stecs;
 				PRODUCT_NAME = expobaretypescript;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
