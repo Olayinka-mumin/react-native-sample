@@ -12,7 +12,7 @@ React Native Template
 - Localization Setup 
 - Map & Location Setup
 - Socket Setup
-- Notification Setup (Oneignal)
+- Notification Setup (OneSignal)
 - Environment Variable Setup
 - Error Catching Setup
 - Unit & Integration Testing Setup (Jest, Testing Library)
